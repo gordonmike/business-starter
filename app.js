@@ -32,10 +32,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     const navHome = document.getElementById('nav-home');
     const navAdmin = document.getElementById('nav-admin');
     const navGetStarted = document.getElementById('nav-get-started');
+    const navSkills = document.getElementById('nav-skills');
     
     const viewHome = document.getElementById('view-home');
     const viewAdmin = document.getElementById('view-admin');
     const viewGetStarted = document.getElementById('view-get-started');
+    const viewSkills = document.getElementById('view-skills');
 
     const adminForm = document.getElementById('admin-form');
     const adminMessage = document.getElementById('admin-message');
@@ -151,11 +153,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         viewHome.classList.add('view-hidden');
         viewAdmin.classList.add('view-hidden');
         viewGetStarted.classList.add('view-hidden');
+        viewSkills.classList.add('view-hidden');
         
         // Remove active class from all navs
         navHome.classList.remove('active');
         navAdmin.classList.remove('active');
         navGetStarted.classList.remove('active');
+        navSkills.classList.remove('active');
         
         // Show selected view & active nav
         viewToShow.classList.remove('view-hidden');
@@ -175,6 +179,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     navGetStarted.addEventListener('click', (e) => {
         e.preventDefault();
         switchView(viewGetStarted, navGetStarted);
+    });
+
+    navSkills.addEventListener('click', (e) => {
+        e.preventDefault();
+        switchView(viewSkills, navSkills);
     });
 
     // 4. Admin Form Logic
@@ -224,6 +233,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // User is signed in.
             authUnauthenticated.classList.add('hidden');
             authAuthenticated.classList.remove('hidden');
+            navSkills.classList.remove('hidden');
             
             userNameEl.textContent = `Welcome, ${user.displayName || 'User'}!`;
             userEmailEl.textContent = user.email;
@@ -238,6 +248,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             // User is signed out.
             authUnauthenticated.classList.remove('hidden');
             authAuthenticated.classList.add('hidden');
+            navSkills.classList.add('hidden');
         }
     });
 
@@ -245,6 +256,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         signInWithPopup(auth, provider)
             .then((result) => {
                 console.log("Logged in successfully:", result.user);
+                sessionStorage.setItem('justLoggedIn', 'true');
                 window.location.reload();
             }).catch((error) => {
                 console.error("Login error:", error);
@@ -281,5 +293,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
             console.log("Seeding complete!");
         }
+    }
+
+    // Redirect to skills view if we just logged in
+    if (sessionStorage.getItem('justLoggedIn') === 'true') {
+        sessionStorage.removeItem('justLoggedIn');
+        switchView(viewSkills, navSkills);
     }
 });

@@ -16,6 +16,7 @@
             <h1 class="logo">Business <span class="highlight">Starter</span></h1>
             <div class="nav-links">
                 <a href="#" id="nav-home" class="active">Discover</a>
+                <a href="#" id="nav-skills" class="hidden">My Skills</a>
                 <a href="#" id="nav-admin">Admin (Upload)</a>
                 <a href="#" id="nav-get-started" class="highlight-link">Get Started</a>
             </div>
@@ -25,22 +26,12 @@
     <main id="view-home" class="view-active">
         <header class="hero">
             <h2 class="hero-title">Start your business with confidence.</h2>
-            <p class="hero-subtitle">Learn from past successes and failures. Select your skills to get tailored case studies.</p>
+            <p class="hero-subtitle">Learn from past successes and failures.</p>
         </header>
-
-        <section class="skills-section">
-            <div class="section-header">
-                <h3>1. Select your skills</h3>
-                <p>We'll show you case studies relevant to what you know.</p>
-            </div>
-            <div id="skills-container" class="skills-container">
-                <!-- Skills injected via JS -->
-            </div>
-        </section>
 
         <section class="feed-section">
             <div class="section-header">
-                <h3>2. Learn from others</h3>
+                <h3>Latest Case Studies</h3>
                 <p>Showing <span id="post-count">0</span> case studies based on your skills.</p>
             </div>
             <div id="feed-container" class="feed-container">
@@ -53,6 +44,18 @@
                     <p>Soon you'll be able to upload your own business analysis and get paid per view.</p>
                     <button class="btn btn-disabled">Upload Analysis (Coming Soon)</button>
                 </div>
+            </div>
+        </section>
+    </main>
+
+    <main id="view-skills" class="view-hidden">
+        <section class="skills-section" style="max-width: 800px; margin: 0 auto;">
+            <div class="section-header">
+                <h2>Select your skills</h2>
+                <p>We'll personalize your Discover feed with case studies relevant to what you know.</p>
+            </div>
+            <div id="skills-container" class="skills-container">
+                <!-- Skills injected via JS -->
             </div>
         </section>
     </main>
