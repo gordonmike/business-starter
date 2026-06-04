@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // DOM Elements
     const skillsContainer = document.getElementById('skills-container');
+    const feedContainer = document.getElementById('feed-container');
+    const postCountEl = document.getElementById('post-count');
+    const btnViewStories = document.getElementById('btn-view-stories');
     const navGetStarted = document.getElementById('nav-get-started');
     const navSkills = document.getElementById('nav-skills');
     const navUserProfile = document.getElementById('nav-user-profile');
@@ -39,6 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const viewAdmin = document.getElementById('view-admin');
     const viewGetStarted = document.getElementById('view-get-started');
     const viewSkills = document.getElementById('view-skills');
+    const viewStories = document.getElementById('view-stories');
 
     const adminForm = document.getElementById('admin-form');
     const adminMessage = document.getElementById('admin-message');
@@ -56,6 +60,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // Initial render
     renderSkills();
+
+    // Listen to real-time updates from Firestore
+    onSnapshot(query(collection(db, "posts"), orderBy("createdAt", "desc")), (snapshot) => {
+        posts = [];
+        snapshot.forEach((doc) => {
+            posts.push({ id: doc.id, ...doc.data() });
+        });
+        renderFeed();
+    });
 
     // 1. Render Skills
     function renderSkills() {
@@ -83,6 +96,60 @@ document.addEventListener('DOMContentLoaded', async () => {
             selectedSkills.add(skillId);
             chipElement.classList.add('selected');
         }
+        renderFeed();
+    }
+
+    // 2. Render Feed
+    function renderFeed() {
+        if (!feedContainer) return;
+        feedContainer.innerHTML = '';
+        
+        const filteredPosts = posts.filter(post => {
+            if (selectedSkills.size === 0) return true;
+            if (!post.skills) return false;
+            return post.skills.some(skill => selectedSkills.has(skill));
+        });
+
+        if (postCountEl) postCountEl.textContent = filteredPosts.length;
+
+        if (filteredPosts.length === 0) {
+            feedContainer.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 2rem;">No case studies match your selected skills. Try selecting others!</p>';
+            return;
+        }
+
+        filteredPosts.forEach((post, index) => {
+            const card = document.createElement('article');
+            card.className = 'post-card';
+            card.style.animationDelay = `${index * 0.1}s`;
+
+            const isSuccess = post.type === 'success';
+            const badgeClass = isSuccess ? 'success' : 'fail';
+            const badgeText = isSuccess ? 'Success Story' : 'Failure Analysis';
+
+            const skillsHtml = (post.skills || []).map(s => {
+                const skillName = skills.find(sk => sk.id === s)?.name || s;
+                return `<span class="post-skill-tag">${skillName}</span>`;
+            }).join('');
+
+            card.innerHTML = `
+                <div class="post-header">
+                    <div>
+                        <h4 class="post-title">${post.title}</h4>
+                        <div class="post-meta">
+                            <span>By ${post.author || 'Anonymous'}</span>
+                            <span>•</span>
+                            <span>${(post.views || 0).toLocaleString()} views</span>
+                        </div>
+                    </div>
+                    <span class="badge ${badgeClass}">${badgeText}</span>
+                </div>
+                <p class="post-content">${post.content}</p>
+                <div class="post-skills">
+                    ${skillsHtml}
+                </div>
+            `;
+            feedContainer.appendChild(card);
+        });
     }
 
     // 3. Navigation Logic
@@ -92,6 +159,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         viewAdmin.classList.add('view-hidden');
         viewGetStarted.classList.add('view-hidden');
         viewSkills.classList.add('view-hidden');
+        if (viewStories) viewStories.classList.add('view-hidden');
         
         // Remove active class from all navs
         if (navGetStarted) navGetStarted.classList.remove('active');
@@ -113,6 +181,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         navSkills.addEventListener('click', (e) => {
             e.preventDefault();
             switchView(viewSkills, navSkills);
+        });
+    }
+
+    if (btnViewStories) {
+        btnViewStories.addEventListener('click', () => {
+            switchView(viewStories, navSkills);
         });
     }
 
