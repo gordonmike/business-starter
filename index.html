@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Business Starter - Learn from the Best & Worst</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
     <nav class="glass-nav">
@@ -19,7 +23,7 @@
                 <a href="#" id="nav-get-started" class="highlight-link">Get Started</a>
                 <div id="nav-user-profile" class="nav-user-profile hidden">
                     <img id="nav-user-photo" src="" alt="Profile" class="nav-user-photo">
-                    
+
                     <div id="nav-dropdown" class="nav-dropdown hidden">
                         <div class="nav-dropdown-header">
                             <span id="nav-user-name" class="nav-user-name"></span>
@@ -37,7 +41,7 @@
     <main id="view-home" class="view-active">
         <header class="hero">
             <h2 class="hero-title">Start your business with confidence.</h2>
-            <p class="hero-subtitle">Learn from past successes and failures.</p>
+            <p class="hero-subtitle">Learn from past successes and failures and start your business.</p>
         </header>
         </section>
     </main>
@@ -76,7 +80,8 @@
                 </div>
                 <div class="form-group">
                     <label>Content / Analysis</label>
-                    <textarea id="admin-content" rows="6" required placeholder="Paste the Reddit post content here..."></textarea>
+                    <textarea id="admin-content" rows="6" required
+                        placeholder="Paste the Reddit post content here..."></textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Publish to Feed</button>
             </form>
@@ -87,15 +92,17 @@
     <main id="view-get-started" class="view-hidden">
         <div class="auth-container glass-panel">
             <h2>Get Started</h2>
-            
+
             <div id="auth-unauthenticated">
-                <p style="margin-bottom: 24px; color: var(--text-muted);">Sign in to track your reading progress and unlock the ability to share your own business case studies!</p>
+                <p style="margin-bottom: 24px; color: var(--text-muted);">Sign in to track your reading progress and
+                    unlock the ability to share your own business case studies!</p>
                 <button id="btn-google-login" class="btn btn-google">
-                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo" class="google-icon">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo"
+                        class="google-icon">
                     Sign in with Google
                 </button>
             </div>
-            
+
             <div id="auth-authenticated" class="hidden">
                 <div class="user-profile">
                     <img id="user-photo" src="" alt="Profile Photo" class="user-photo">
@@ -109,4 +116,5 @@
 
     <script type="module" src="app.js"></script>
 </body>
+
 </html>
