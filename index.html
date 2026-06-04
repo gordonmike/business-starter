@@ -11,6 +11,16 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;700&display=swap"
         rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Prevent Flash of Unstyled Content during login redirect */
+        html.redirecting-to-skills #view-home { display: none !important; }
+        html.redirecting-to-skills #view-skills { display: block !important; }
+    </style>
+    <script>
+        if (sessionStorage.getItem('justLoggedIn') === 'true') {
+            document.documentElement.classList.add('redirecting-to-skills');
+        }
+    </script>
 </head>
 
 <body>
@@ -18,7 +28,7 @@
     <nav class="glass-nav">
         <div class="nav-container">
             <h1 class="logo">Business <span class="highlight">Starter</span></h1>
-            <div class="nav-links">
+            <div class="nav-links" id="nav-links-container" style="opacity: 0; transition: opacity 0.3s ease;">
                 <a href="#" id="nav-skills" class="hidden">My Skills</a>
                 <a href="#" id="nav-get-started" class="highlight-link">Get Started</a>
                 <div id="nav-user-profile" class="nav-user-profile hidden">

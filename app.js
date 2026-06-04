@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const feedContainer = document.getElementById('feed-container');
     const postCountEl = document.getElementById('post-count');
     const btnViewStories = document.getElementById('btn-view-stories');
+    const navLinksContainer = document.getElementById('nav-links-container');
     const navGetStarted = document.getElementById('nav-get-started');
     const navSkills = document.getElementById('nav-skills');
     const navUserProfile = document.getElementById('nav-user-profile');
@@ -244,7 +245,13 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // 5. Auth Logic
+    let authInitialized = false;
     onAuthStateChanged(auth, (user) => {
+        if (!authInitialized) {
+            authInitialized = true;
+            if (navLinksContainer) navLinksContainer.style.opacity = '1';
+        }
+        
         if (user) {
             // User is signed in.
             authUnauthenticated.classList.add('hidden');
@@ -337,6 +344,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Redirect to skills view if we just logged in
     if (sessionStorage.getItem('justLoggedIn') === 'true') {
         sessionStorage.removeItem('justLoggedIn');
+        document.documentElement.classList.remove('redirecting-to-skills');
         switchView(viewSkills, navSkills);
     }
 });
