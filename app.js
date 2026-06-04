@@ -4,7 +4,7 @@ import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTim
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBjWH8uqVmOwvZxdwbT5pnZeW_gsQWqbho",
+    apiKey: "AIzaSyBjWH8uqVmOwvZxdwbT5pNzeW_gsQWqbho",
     authDomain: "business-starter-8543c.firebaseapp.com",
     projectId: "business-starter-8543c",
     storageBucket: "business-starter-8543c.firebasestorage.app",
