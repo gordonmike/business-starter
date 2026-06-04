@@ -133,6 +133,30 @@ document.addEventListener('DOMContentLoaded', async () => {
                 return `<span class="post-skill-tag">${skillName}</span>`;
             }).join('');
 
+            let specsHtml = '';
+            if (post.specs) {
+                specsHtml = `
+                    <div class="post-specs-grid">
+                        <div class="spec-item">
+                            <span class="spec-label">Startup Cost</span>
+                            <span class="spec-value">${post.specs.startupCost || 'N/A'}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Time to Launch</span>
+                            <span class="spec-value">${post.specs.timeToLaunch || 'N/A'}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Business Model</span>
+                            <span class="spec-value">${post.specs.businessModel || 'N/A'}</span>
+                        </div>
+                        <div class="spec-item">
+                            <span class="spec-label">Top Channel</span>
+                            <span class="spec-value">${post.specs.topChannel || 'N/A'}</span>
+                        </div>
+                    </div>
+                `;
+            }
+
             card.innerHTML = `
                 <div class="post-header">
                     <div>
@@ -145,6 +169,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     </div>
                     <span class="badge ${badgeClass}">${badgeText}</span>
                 </div>
+                ${specsHtml}
                 <p class="post-content">${post.content}</p>
                 <div class="post-skills">
                     ${skillsHtml}

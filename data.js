@@ -15,7 +15,13 @@ export const mockPosts = [
         skills: ['coding', 'marketing'],
         content: "I noticed a gap in the market for a specific SEO tool. I built an MVP using basic coding skills in a weekend and spent the rest of the month doing cold email outreach (marketing). The key was keeping it simple and focusing on one feature. I ended up selling it on Acquire.com.",
         views: 12500,
-        author: "SaaS_Builder99"
+        author: "SaaS_Builder99",
+        specs: {
+            startupCost: "$0 (Bootstrapped)",
+            timeToLaunch: "1 Weekend",
+            businessModel: "B2B SaaS",
+            topChannel: "Cold Email"
+        }
     },
     {
         id: 2,
@@ -24,7 +30,13 @@ export const mockPosts = [
         skills: ['marketing', 'sales'],
         content: "I thought I had the perfect product. I set up a Shopify store and immediately dumped money into FB ads. My mistake? Not testing the creatives and having a terrible landing page that didn't convert. I learned that marketing is useless if the sales funnel is broken.",
         views: 34000,
-        author: "EcomFailure"
+        author: "EcomFailure",
+        specs: {
+            startupCost: "$10,000",
+            timeToLaunch: "2 Weeks",
+            businessModel: "E-Commerce",
+            topChannel: "Facebook Ads"
+        }
     },
     {
         id: 3,
@@ -33,7 +45,13 @@ export const mockPosts = [
         skills: ['design', 'sales'],
         content: "I'm a designer, not a salesperson. But I realized waiting for clients wouldn't work. I started sending personalized Loom videos to founders showing how I could improve their site. My close rate was 15%. Now I have a team of 3.",
         views: 8900,
-        author: "DesignPreneur"
+        author: "DesignPreneur",
+        specs: {
+            startupCost: "$150 (Tools)",
+            timeToLaunch: "1 Month",
+            businessModel: "B2B Service",
+            topChannel: "Cold DMs (Loom)"
+        }
     },
     {
         id: 4,
@@ -42,7 +60,13 @@ export const mockPosts = [
         skills: ['writing', 'marketing'],
         content: "I wrote consistently for 6 months about productivity. I had 200 subscribers. The issue? I didn't spend enough time on distribution. I thought 'if you build it, they will come.' They don't. You need to market your writing aggressively.",
         views: 15600,
-        author: "Wordsmith_T"
+        author: "Wordsmith_T",
+        specs: {
+            startupCost: "$50 (Domain)",
+            timeToLaunch: "1 Week",
+            businessModel: "Newsletter",
+            topChannel: "Organic Twitter"
+        }
     },
     {
         id: 5,
@@ -51,6 +75,12 @@ export const mockPosts = [
         skills: ['coding', 'management', 'sales'],
         content: "Started as a solo freelancer. The turning point was hiring my first junior dev and focusing entirely on sales and management. Moving from 'doing the work' to 'building the machine' was hard but necessary.",
         views: 45000,
-        author: "CodeBoss"
+        author: "CodeBoss",
+        specs: {
+            startupCost: "$0 (Bootstrapped)",
+            timeToLaunch: "6 Months",
+            businessModel: "Agency",
+            topChannel: "Referrals"
+        }
     }
 ];
