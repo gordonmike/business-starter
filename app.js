@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const postCountEl = document.getElementById('post-count');
     
     const navHome = document.getElementById('nav-home');
-    const navAdmin = document.getElementById('nav-admin');
     const navGetStarted = document.getElementById('nav-get-started');
     const navSkills = document.getElementById('nav-skills');
     const navUserProfile = document.getElementById('nav-user-profile');
@@ -162,10 +161,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         viewSkills.classList.add('view-hidden');
         
         // Remove active class from all navs
-        navHome.classList.remove('active');
-        navAdmin.classList.remove('active');
-        navGetStarted.classList.remove('active');
-        navSkills.classList.remove('active');
+        if (navHome) navHome.classList.remove('active');
+        if (navGetStarted) navGetStarted.classList.remove('active');
+        if (navSkills) navSkills.classList.remove('active');
         
         // Show selected view & active nav
         viewToShow.classList.remove('view-hidden');
@@ -177,20 +175,19 @@ document.addEventListener('DOMContentLoaded', async () => {
         switchView(viewHome, navHome);
     });
 
-    navAdmin.addEventListener('click', (e) => {
-        e.preventDefault();
-        switchView(viewAdmin, navAdmin);
-    });
-    
-    navGetStarted.addEventListener('click', (e) => {
-        e.preventDefault();
-        switchView(viewGetStarted, navGetStarted);
-    });
+    if (navGetStarted) {
+        navGetStarted.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchView(viewGetStarted, navGetStarted);
+        });
+    }
 
-    navSkills.addEventListener('click', (e) => {
-        e.preventDefault();
-        switchView(viewSkills, navSkills);
-    });
+    if (navSkills) {
+        navSkills.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchView(viewSkills, navSkills);
+        });
+    }
 
     // Profile Dropdown Logic
     navUserProfile.addEventListener('click', (e) => {
