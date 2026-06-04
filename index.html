@@ -21,8 +21,16 @@
                 <a href="#" id="nav-get-started" class="highlight-link">Get Started</a>
                 <div id="nav-user-profile" class="nav-user-profile hidden">
                     <img id="nav-user-photo" src="" alt="Profile" class="nav-user-photo">
-                    <span id="nav-user-name" class="nav-user-name"></span>
-                    <button id="nav-btn-sign-out" class="btn-nav-logout">Log Out</button>
+                    
+                    <div id="nav-dropdown" class="nav-dropdown hidden">
+                        <div class="nav-dropdown-header">
+                            <span id="nav-user-name" class="nav-user-name"></span>
+                        </div>
+                        <div class="nav-dropdown-links">
+                            <button id="nav-btn-profile" class="dropdown-btn">Profile</button>
+                            <button id="nav-btn-sign-out" class="dropdown-btn text-fail">Log Out</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

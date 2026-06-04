@@ -81,8 +81,9 @@ body {
 .nav-user-profile {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
     margin-left: 2rem;
+    position: relative;
+    cursor: pointer;
 }
 
 .nav-user-photo {
@@ -99,21 +100,56 @@ body {
     font-size: 0.9rem;
 }
 
-.btn-nav-logout {
-    background: transparent;
-    color: var(--text-muted);
+.nav-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    width: 200px;
+    background: rgba(15, 23, 42, 0.95);
+    backdrop-filter: blur(12px);
     border: 1px solid var(--glass-border);
-    padding: 0.25rem 0.75rem;
-    border-radius: 6px;
-    cursor: pointer;
-    font-family: var(--font-main);
-    font-size: 0.8rem;
-    transition: all 0.3s ease;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    z-index: 1000;
+    transform-origin: top right;
+    animation: fadeIn 0.2s ease-out;
 }
 
-.btn-nav-logout:hover {
+.nav-dropdown-header {
+    padding: 1rem;
+    border-bottom: 1px solid var(--glass-border);
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.nav-dropdown-links {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+
+.dropdown-btn {
+    background: transparent;
+    color: var(--text-main);
+    border: none;
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: var(--font-main);
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+}
+
+.dropdown-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.dropdown-btn.text-fail {
     color: var(--fail);
-    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.dropdown-btn.text-fail:hover {
     background: rgba(239, 68, 68, 0.1);
 }
 

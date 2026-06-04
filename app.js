@@ -36,6 +36,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     const navUserProfile = document.getElementById('nav-user-profile');
     const navUserPhoto = document.getElementById('nav-user-photo');
     const navUserName = document.getElementById('nav-user-name');
+    const navDropdown = document.getElementById('nav-dropdown');
+    const navBtnProfile = document.getElementById('nav-btn-profile');
     const navBtnSignOut = document.getElementById('nav-btn-sign-out');
     
     const viewHome = document.getElementById('view-home');
@@ -188,6 +190,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     navSkills.addEventListener('click', (e) => {
         e.preventDefault();
         switchView(viewSkills, navSkills);
+    });
+
+    // Profile Dropdown Logic
+    navUserProfile.addEventListener('click', (e) => {
+        navDropdown.classList.toggle('hidden');
+        e.stopPropagation();
+    });
+
+    window.addEventListener('click', (e) => {
+        if (!navUserProfile.contains(e.target)) {
+            navDropdown.classList.add('hidden');
+        }
     });
 
     // 4. Admin Form Logic
