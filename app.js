@@ -26,9 +26,6 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     // DOM Elements
     const skillsContainer = document.getElementById('skills-container');
-    const feedContainer = document.getElementById('feed-container');
-    const postCountEl = document.getElementById('post-count');
-    
     const navGetStarted = document.getElementById('nav-get-started');
     const navSkills = document.getElementById('nav-skills');
     const navUserProfile = document.getElementById('nav-user-profile');
@@ -57,18 +54,8 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Seed mock data if database is empty
     await seedDatabaseIfEmpty();
 
-    // Initialize UI
+    // Initial render
     renderSkills();
-
-    // Listen to real-time updates from Firestore
-    const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
-    onSnapshot(q, (snapshot) => {
-        posts = [];
-        snapshot.forEach((doc) => {
-            posts.push({ id: doc.id, ...doc.data() });
-        });
-        renderFeed();
-    });
 
     // 1. Render Skills
     function renderSkills() {
@@ -96,59 +83,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             selectedSkills.add(skillId);
             chipElement.classList.add('selected');
         }
-        renderFeed();
-    }
-
-    // 2. Render Feed
-    function renderFeed() {
-        feedContainer.innerHTML = '';
-        
-        const filteredPosts = posts.filter(post => {
-            if (selectedSkills.size === 0) return true;
-            if (!post.skills) return false;
-            return post.skills.some(skill => selectedSkills.has(skill));
-        });
-
-        postCountEl.textContent = filteredPosts.length;
-
-        if (filteredPosts.length === 0) {
-            feedContainer.innerHTML = '<p style="color: var(--text-muted);">No case studies match your selected skills. Try selecting others!</p>';
-            return;
-        }
-
-        filteredPosts.forEach((post, index) => {
-            const card = document.createElement('div');
-            card.className = 'post-card';
-            card.style.animationDelay = `${index * 0.1}s`;
-
-            const isSuccess = post.type === 'success';
-            const badgeClass = isSuccess ? 'success' : 'fail';
-            const badgeText = isSuccess ? 'Success Story' : 'Failure Analysis';
-
-            const skillsHtml = (post.skills || []).map(s => {
-                const skillName = skills.find(sk => sk.id === s)?.name || s;
-                return `<span class="post-skill-tag">${skillName}</span>`;
-            }).join('');
-
-            card.innerHTML = `
-                <div class="post-header">
-                    <div>
-                        <h4 class="post-title">${post.title}</h4>
-                        <div class="post-meta">
-                            <span>By ${post.author}</span>
-                            <span>•</span>
-                            <span>${(post.views || 0).toLocaleString()} views</span>
-                        </div>
-                    </div>
-                    <span class="badge ${badgeClass}">${badgeText}</span>
-                </div>
-                <p class="post-content">${post.content}</p>
-                <div class="post-skills">
-                    ${skillsHtml}
-                </div>
-            `;
-            feedContainer.appendChild(card);
-        });
     }
 
     // 3. Navigation Logic
