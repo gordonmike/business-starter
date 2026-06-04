@@ -33,6 +33,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const navAdmin = document.getElementById('nav-admin');
     const navGetStarted = document.getElementById('nav-get-started');
     const navSkills = document.getElementById('nav-skills');
+    const navUserProfile = document.getElementById('nav-user-profile');
+    const navUserPhoto = document.getElementById('nav-user-photo');
+    const navUserName = document.getElementById('nav-user-name');
+    const navBtnSignOut = document.getElementById('nav-btn-sign-out');
     
     const viewHome = document.getElementById('view-home');
     const viewAdmin = document.getElementById('view-admin');
@@ -235,6 +239,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             authAuthenticated.classList.remove('hidden');
             navSkills.classList.remove('hidden');
             
+            navGetStarted.classList.add('hidden');
+            navUserProfile.classList.remove('hidden');
+            
+            navUserName.textContent = user.displayName || 'User';
+            if (user.photoURL) {
+                navUserPhoto.src = user.photoURL;
+                navUserPhoto.style.display = 'block';
+            } else {
+                navUserPhoto.style.display = 'none';
+            }
+            
             userNameEl.textContent = `Welcome, ${user.displayName || 'User'}!`;
             userEmailEl.textContent = user.email;
             
@@ -249,6 +264,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             authUnauthenticated.classList.remove('hidden');
             authAuthenticated.classList.add('hidden');
             navSkills.classList.add('hidden');
+            
+            navGetStarted.classList.remove('hidden');
+            navUserProfile.classList.add('hidden');
         }
     });
 
@@ -265,6 +283,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     btnSignOut.addEventListener('click', () => {
+        signOut(auth).then(() => {
+            console.log("Signed out successfully");
+            window.location.reload();
+        }).catch((error) => {
+            console.error("Sign out error:", error);
+        });
+    });
+
+    navBtnSignOut.addEventListener('click', () => {
         signOut(auth).then(() => {
             console.log("Signed out successfully");
             window.location.reload();
