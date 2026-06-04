@@ -1,6 +1,7 @@
 import { skills, mockPosts } from './data.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp, getDocs } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-firestore.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.1/firebase-auth.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBjWH8uqVmOwvZxdwbT5pnZeW_gsQWqbho",
@@ -15,6 +16,8 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
 
 document.addEventListener('DOMContentLoaded', async () => {
     // State
@@ -28,11 +31,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     
     const navHome = document.getElementById('nav-home');
     const navAdmin = document.getElementById('nav-admin');
+    const navGetStarted = document.getElementById('nav-get-started');
+    
     const viewHome = document.getElementById('view-home');
     const viewAdmin = document.getElementById('view-admin');
+    const viewGetStarted = document.getElementById('view-get-started');
 
     const adminForm = document.getElementById('admin-form');
     const adminMessage = document.getElementById('admin-message');
+    
+    const btnGoogleLogin = document.getElementById('btn-google-login');
+    const btnSignOut = document.getElementById('btn-sign-out');
+    const authUnauthenticated = document.getElementById('auth-unauthenticated');
+    const authAuthenticated = document.getElementById('auth-authenticated');
+    const userNameEl = document.getElementById('user-name');
+    const userEmailEl = document.getElementById('user-email');
+    const userPhotoEl = document.getElementById('user-photo');
 
     // Seed mock data if database is empty
     await seedDatabaseIfEmpty();
@@ -132,20 +146,35 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // 3. Navigation Logic
+    function switchView(viewToShow, navToActivate) {
+        // Hide all views
+        viewHome.classList.add('view-hidden');
+        viewAdmin.classList.add('view-hidden');
+        viewGetStarted.classList.add('view-hidden');
+        
+        // Remove active class from all navs
+        navHome.classList.remove('active');
+        navAdmin.classList.remove('active');
+        navGetStarted.classList.remove('active');
+        
+        // Show selected view & active nav
+        viewToShow.classList.remove('view-hidden');
+        navToActivate.classList.add('active');
+    }
+
     navHome.addEventListener('click', (e) => {
         e.preventDefault();
-        viewHome.classList.remove('view-hidden');
-        viewAdmin.classList.add('view-hidden');
-        navHome.classList.add('active');
-        navAdmin.classList.remove('active');
+        switchView(viewHome, navHome);
     });
 
     navAdmin.addEventListener('click', (e) => {
         e.preventDefault();
-        viewAdmin.classList.remove('view-hidden');
-        viewHome.classList.add('view-hidden');
-        navAdmin.classList.add('active');
-        navHome.classList.remove('active');
+        switchView(viewAdmin, navAdmin);
+    });
+    
+    navGetStarted.addEventListener('click', (e) => {
+        e.preventDefault();
+        switchView(viewGetStarted, navGetStarted);
     });
 
     // 4. Admin Form Logic
@@ -187,6 +216,49 @@ document.addEventListener('DOMContentLoaded', async () => {
         setTimeout(() => {
             adminMessage.className = "hidden";
         }, 3000);
+    });
+
+    // 5. Auth Logic
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            // User is signed in.
+            authUnauthenticated.classList.add('hidden');
+            authAuthenticated.classList.remove('hidden');
+            
+            userNameEl.textContent = `Welcome, ${user.displayName || 'User'}!`;
+            userEmailEl.textContent = user.email;
+            
+            if (user.photoURL) {
+                userPhotoEl.src = user.photoURL;
+                userPhotoEl.style.display = 'block';
+            } else {
+                userPhotoEl.style.display = 'none';
+            }
+        } else {
+            // User is signed out.
+            authUnauthenticated.classList.remove('hidden');
+            authAuthenticated.classList.add('hidden');
+        }
+    });
+
+    btnGoogleLogin.addEventListener('click', () => {
+        signInWithPopup(auth, provider)
+            .then((result) => {
+                console.log("Logged in successfully:", result.user);
+                window.location.reload();
+            }).catch((error) => {
+                console.error("Login error:", error);
+                alert("Failed to sign in. See console for details.");
+            });
+    });
+
+    btnSignOut.addEventListener('click', () => {
+        signOut(auth).then(() => {
+            console.log("Signed out successfully");
+            window.location.reload();
+        }).catch((error) => {
+            console.error("Sign out error:", error);
+        });
     });
 
     // 5. Database Seeding Script (runs once if db is empty)

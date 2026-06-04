@@ -17,6 +17,7 @@
             <div class="nav-links">
                 <a href="#" id="nav-home" class="active">Discover</a>
                 <a href="#" id="nav-admin">Admin (Upload)</a>
+                <a href="#" id="nav-get-started" class="highlight-link">Get Started</a>
             </div>
         </div>
     </nav>
@@ -83,6 +84,29 @@
                 <button type="submit" class="btn btn-primary">Publish to Feed</button>
             </form>
             <div id="admin-message" class="hidden"></div>
+        </div>
+    </main>
+
+    <main id="view-get-started" class="view-hidden">
+        <div class="auth-container glass-panel">
+            <h2>Get Started</h2>
+            
+            <div id="auth-unauthenticated">
+                <p style="margin-bottom: 24px; color: var(--text-muted);">Sign in to track your reading progress and unlock the ability to share your own business case studies!</p>
+                <button id="btn-google-login" class="btn btn-google">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google Logo" class="google-icon">
+                    Sign in with Google
+                </button>
+            </div>
+            
+            <div id="auth-authenticated" class="hidden">
+                <div class="user-profile">
+                    <img id="user-photo" src="" alt="Profile Photo" class="user-photo">
+                    <h3 id="user-name">Welcome!</h3>
+                    <p id="user-email" style="color: var(--text-muted); margin-bottom: 24px;">user@example.com</p>
+                </div>
+                <button id="btn-sign-out" class="btn btn-secondary">Sign Out</button>
+            </div>
         </div>
     </main>
 
