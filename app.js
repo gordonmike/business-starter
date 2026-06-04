@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const feedContainer = document.getElementById('feed-container');
     const postCountEl = document.getElementById('post-count');
     
-    const navHome = document.getElementById('nav-home');
     const navGetStarted = document.getElementById('nav-get-started');
     const navSkills = document.getElementById('nav-skills');
     const navUserProfile = document.getElementById('nav-user-profile');
@@ -161,19 +160,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         viewSkills.classList.add('view-hidden');
         
         // Remove active class from all navs
-        if (navHome) navHome.classList.remove('active');
         if (navGetStarted) navGetStarted.classList.remove('active');
         if (navSkills) navSkills.classList.remove('active');
         
         // Show selected view & active nav
         viewToShow.classList.remove('view-hidden');
-        navToActivate.classList.add('active');
+        if (navToActivate) navToActivate.classList.add('active');
     }
-
-    navHome.addEventListener('click', (e) => {
-        e.preventDefault();
-        switchView(viewHome, navHome);
-    });
 
     if (navGetStarted) {
         navGetStarted.addEventListener('click', (e) => {
