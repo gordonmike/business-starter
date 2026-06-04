@@ -33,6 +33,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const navGetStarted = document.getElementById('nav-get-started');
     const navSkills = document.getElementById('nav-skills');
     const navUserProfile = document.getElementById('nav-user-profile');
+    const navLogo = document.getElementById('nav-logo');
     const navUserPhoto = document.getElementById('nav-user-photo');
     const navUserName = document.getElementById('nav-user-name');
     const navDropdown = document.getElementById('nav-dropdown');
@@ -169,6 +170,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         // Show selected view & active nav
         viewToShow.classList.remove('view-hidden');
         if (navToActivate) navToActivate.classList.add('active');
+    }
+
+    if (navLogo) {
+        navLogo.addEventListener('click', (e) => {
+            e.preventDefault();
+            switchView(viewHome, null);
+        });
     }
 
     if (navGetStarted) {
